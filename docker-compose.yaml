@@ -28,11 +28,7 @@ services:
     image: mariadb:latest
     container_name: db
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: mypass
-      MYSQL_DATABASE: mariadbtest
-      MYSQL_USER: mariadb
-      MYSQL_PASSWORD: mypass
+    env_file: ./database/db.env
     volumes:
       - /home/samaze123/mysql:/var/lib/mysql
     networks:
