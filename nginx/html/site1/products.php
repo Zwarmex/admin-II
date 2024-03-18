@@ -21,10 +21,10 @@
 <h1>Catalogue WoodyToys</h1>
 
 <?php
-$dbname = 'woodytoys';
+$dbname = getenv('MARIADB_DATABASE');
+$dbhost = getenv('MARIADB_HOST');
 $dbuser = 'root';
-$dbpass = 'mypass';
-$dbhost = '10.0.0.4';
+$dbpass = getenv('MARIADB_PASSWORD');
 $connect = mysqli_connect($dbhost, $dbuser, $dbpass) or die("Unable to connect to '$dbhost'");
 mysqli_select_db($connect,$dbname) or die("Could not open the database '$dbname'");
 $result = mysqli_query($connect,"SELECT id, product_name, product_price FROM products");

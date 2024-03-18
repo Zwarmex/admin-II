@@ -10,7 +10,7 @@ services:
     volumes:
       - "./bind/data/:/etc/bind/"
     networks:
-      admin2:
+      dmz:
         ipv4_address: 10.0.0.2
   nginx:
     image: nginx:latest
@@ -22,33 +22,46 @@ services:
       - ./nginx/html:/var/www/html
       - ./nginx/conf:/etc/nginx
     networks:
-      admin2:
+      dmz:
         ipv4_address: 10.0.0.3
   mariadb:
     image: mariadb:latest
     container_name: db
     restart: always
-    env_file: ./database/db.env
+    env_file: 
+      - ./database/db.env
+      - ./database/root.env
     volumes:
       - /home/samaze123/mysql:/var/lib/mysql
     networks:
-      admin2:
-        ipv4_address: 10.0.0.4
+      db_net:
+        ipv4_address: 10.1.0.4
   php:
     build: ./php
     container_name: php
     restart: always
     volumes:
       - "./nginx/html/site1:/var/www/html/site1"
+    env_file:
+      - ./database/db.env
     networks:
-      admin2:
+      dmz:
         ipv4_address: 10.0.0.5
+      db_net:
+        ipv4_address: 10.1.0.5
 
 networks:
-  admin2:
-    name: admin2
+  dmz:
+    name: dmz
     ipam:
       driver: default
       config:
         - subnet: 10.0.0.0/24
           gateway: 10.0.0.1
+  db_net:
+    name: db_net
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.1.0.0/24
+          gateway: 10.1.0.1
