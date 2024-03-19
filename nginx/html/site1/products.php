@@ -23,7 +23,7 @@
 <?php
 $dbname = getenv('MARIADB_DATABASE');
 $dbhost = getenv('MARIADB_HOST');
-$dbuser = 'root';
+$dbuser = getenv('MARIADB_USER');
 $dbpass = getenv('MARIADB_PASSWORD');
 $connect = mysqli_connect($dbhost, $dbuser, $dbpass) or die("Unable to connect to '$dbhost'");
 mysqli_select_db($connect,$dbname) or die("Could not open the database '$dbname'");
