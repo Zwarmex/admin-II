@@ -13,14 +13,16 @@ services:
       dmz:
         ipv4_address: 10.0.0.2
   nginx:
-    image: nginx:latest
+    build: ./nginx
     container_name: web
     restart: always
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/html:/var/www/html
       - ./nginx/conf:/etc/nginx
+      - ./nginx/letsencrypt:/etc/letsencrypt
     networks:
       dmz:
         ipv4_address: 10.0.0.3
