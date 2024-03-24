@@ -43,7 +43,7 @@ services:
     container_name: php
     restart: always
     volumes:
-      - "./nginx/html/site1:/var/www/html/site1"
+      - "./nginx/html/www:/var/www/html/www"
     env_file:
       - ./database/db.env
     networks:

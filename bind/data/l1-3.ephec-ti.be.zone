@@ -9,6 +9,6 @@ $TTL    86400
                 IN      NS      ns.l1-3.ephec-ti.be.
                 IN      A       54.37.15.74
 ns              IN      A       54.37.15.74
-site1           IN      A       54.37.15.74
-site2           IN      A       54.37.15.74
+www             IN      A       54.37.15.74
+blog            IN      A       54.37.15.74
 _acme-challenge IN      TXT     "mY337FXz0PILDYw762WT4fiYK3Cx4HgPfIMcpO2omX8"

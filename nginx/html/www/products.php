@@ -45,7 +45,7 @@ while ($row = mysqli_fetch_array($result)) {
 
 </table>
 <br>
-<button type="button"><a href="http://site1.l1-3.ephec-ti.be">BACK</a></button>
+<button type="button"><a href="https://www.l1-3.ephec-ti.be">BACK</a></button>
 
 </body>
 </html>
