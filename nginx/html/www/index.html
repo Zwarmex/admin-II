@@ -7,9 +7,38 @@
                text-decoration: none;
                color: black;
           }
+          nav {
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               max-height: 10vh;
+               margin-bottom: 5vh;
+          }
+          .logo{
+               max-width: 20%;
+          }
+          .directions{
+               display: flex;
+               width: 50%;
+               justify-content: space-around;
+          }
+          img {
+               height: 100px;
+               width: auto;
+          }
      </style>
 </head>
 <body>
+     <nav>
+          <div class="logo">
+               <img src="./img/logo.png" alt="Our logo">
+          </div>
+          <div class="directions">
+               <h1><a href="https://www.l1-3.ephec-ti.be">HOME</a></h1>
+               <h1><a href="https://blog.l1-3.ephec-ti.be">BLOG</a></h1>
+
+          </div>
+     </nav>
      <h1>Hello !</h1>
      <h1>It's our main page !</h1>
      <button type="button"><a href="https://www.l1-3.ephec-ti.be/products.php">NOS PRODUITS</a></button>
