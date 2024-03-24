@@ -7,3 +7,5 @@ letsencrypt/certificate/nginx-selfsigned.csr
 letsencrypt/certificate/nginx-selfsigned.key
 certificates/private/nginx-selfsigned.key
 nginx/letsencrypt/*
+mail/data/dms/mail-state/spool-postfix/*
+mail/data/dms/mail-data/*
