@@ -3,7 +3,7 @@ services:
   dns:
     build: ./bind
     container_name: dns
-    restart: always
+    restart: unless-stopped
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -15,13 +15,13 @@ services:
   nginx:
     build: ./nginx
     container_name: web
-    restart: always
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./nginx/html:/var/www/html
-      - ./nginx/conf:/etc/nginx
+      - ./nginx/conf:/etc/nginx:ro
       - ./nginx/letsencrypt:/etc/letsencrypt
     networks:
       dmz:
@@ -29,7 +29,7 @@ services:
   mariadb:
     image: mariadb:latest
     container_name: db
-    restart: always
+    restart: unless-stopped
     env_file: 
       - ./database/db.env
       - ./database/root.env
@@ -41,7 +41,7 @@ services:
   php:
     build: ./php
     container_name: php
-    restart: always
+    restart: unless-stopped
     volumes:
       - "./nginx/html/www:/var/www/html/www"
     env_file:
@@ -51,6 +51,38 @@ services:
         ipv4_address: 10.0.0.5
       db_net:
         ipv4_address: 10.1.0.5
+  mailserver:
+    image: ghcr.io/docker-mailserver/docker-mailserver:latest
+    container_name: mail
+    # Provide the FQDN of your mail server here (Your DNS MX record should point to this value)
+    hostname: mail.l1-3.ephec-ti.be
+    env_file: ./mail/mailserver.env
+    # More information about the mail-server ports:
+    # https://docker-mailserver.github.io/docker-mailserver/latest/config/security/understanding-the-ports/
+    # To avoid conflicts with yaml base-60 float, DO NOT remove the quotation marks.
+    ports:
+      - "25:25"    # SMTP  (explicit TLS => STARTTLS, Authentication is DISABLED => use port 465/587 instead)
+      - "143:143"  # IMAP4 (explicit TLS => STARTTLS)
+      - "465:465"  # ESMTP (implicit TLS)
+      - "587:587"  # ESMTP (explicit TLS => STARTTLS)
+      - "993:993"  # IMAP4 (implicit TLS)
+    volumes:
+      - ./mail/data/dms/mail-data/:/var/mail/
+      - ./mail/data/dms/mail-state/:/var/mail-state/
+      - ./mail/data/dms/mail-logs/:/var/log/mail/
+      - ./mail/data/dms/config/:/tmp/docker-mailserver/
+      - /etc/localtime:/etc/localtime:ro
+      - ./nginx/letsencrypt:/etc/letsencrypt
+    restart: unless-stopped
+    stop_grace_period: 1m
+    # Uncomment if using `ENABLE_FAIL2BAN=1`:
+    # cap_add:
+    #   - NET_ADMIN
+    healthcheck:
+      test: "ss --listening --tcp | grep -P 'LISTEN.+:smtp' || exit 1"
+      timeout: 3s
+      retries: 0
+
 
 networks:
   dmz:
