@@ -1,5 +1,9 @@
 <html>
 <style>
+    body {
+           background-color: #d4c0b8;
+           height: 100vh;
+    }
     table,
     th,
     td {
