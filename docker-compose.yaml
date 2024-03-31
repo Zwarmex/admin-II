@@ -81,6 +81,9 @@ services:
       test: "ss --listening --tcp | grep -P 'LISTEN.+:smtp' || exit 1"
       timeout: 3s
       retries: 0
+    networks:
+      dmz:
+        ipv4_address: 10.0.0.5
 
 
 networks:
