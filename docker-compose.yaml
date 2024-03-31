@@ -1,4 +1,3 @@
-version: '1.0'
 services:
   dns:
     build: ./bind
@@ -70,7 +69,7 @@ services:
       - ./mail/data/dms/mail-data/:/var/mail/
       - ./mail/data/dms/mail-state/:/var/mail-state/
       - ./mail/data/dms/mail-logs/:/var/log/mail/
-      - ./mail/data/dms/config/:/tmp/docker-mailserver/
+      - ./mail/data/dms/config/:/tmp/docker-mailserver/:ro
       - /etc/localtime:/etc/localtime:ro
       - ./nginx/letsencrypt:/etc/letsencrypt
     restart: unless-stopped
